@@ -7,36 +7,37 @@ Arguments:
 2. count          (numeric, optional, default=10) The number of transactions to return
 3. from           (numeric, optional, default=0) The number of transactions to skip
 4. minHeight      (numeric, optional, default=0) The mininum block height for transactions
-5. decryptTravelInfo (boolean, optional, default=false) If true, decrypt any Travel Rule info attached to transactions 
+5. decryptTravelInfo (boolean, optional, default=false) If true, decrypt any Travel Rule info attached to transactions
                                                         (requires active keychain)
+6. minConfirms     (numeric, optional, default=0) The mininum number of confirmations
 
 Result:
 [
   {
-    "account":"accountname",       (string) DEPRECATED. The account name associated with the transaction. 
+    "account":"accountname",       (string) DEPRECATED. The account name associated with the transaction.
                                                 It will be "" for the default account.
-    "address":"bitcoinaddress",    (string) The bitcoin address of the transaction. Not present for 
+    "address":"bitcoinaddress",    (string) The bitcoin address of the transaction. Not present for
                                                 move transactions (category = move).
     "category":"send|receive|move", (string) The transaction category. 'move' is a local (off blockchain)
                                                 transaction between accounts, and not associated with an address,
-                                                transaction id or block. 'send' and 'receive' transactions are 
+                                                transaction id or block. 'send' and 'receive' transactions are
                                                 associated with an address, transaction id and block details
     "amount": x.xxx,          (numeric) The amount in BTC. This is negative for the 'send' category, and for the
                                          'move' category for moves outbound. It is positive for the 'receive' category,
                                          and for the 'move' category for inbound funds.
     "vout": n,                (numeric) the vout value
-    "fee": x.xxx,             (numeric) The amount of the fee in BTC. This is negative and only available for the 
+    "fee": x.xxx,             (numeric) The amount of the fee in BTC. This is negative and only available for the
                                          'send' category of transactions.
-    "confirmations": n,       (numeric) The number of confirmations for the transaction. Available for 'send' and 
+    "confirmations": n,       (numeric) The number of confirmations for the transaction. Available for 'send' and
                                          'receive' category of transactions. Negative confirmations indicate the
-                                         transation conflicts with the block chain
+                                         transaction conflicts with the block chain
     "instant": xxx            (bool) Was this a BitGo Instant transaction?
     "instantId" xxx           (string) If a BitGo Instant transaction, this is the ID for looking up details
     "blockhash": "hashvalue", (string) The block hash containing the transaction. Available for 'send' and 'receive'
                                           category of transactions.
     "txid": "transactionid", (string) The transaction id. Available for 'send' and 'receive' category of transactions.
     "time": xxx,              (numeric) The transaction time in seconds since epoch (midnight Jan 1 1970 GMT).
-    "timereceived": xxx,      (numeric) The time received in seconds since epoch (midnight Jan 1 1970 GMT). Available 
+    "timereceived": xxx,      (numeric) The time received in seconds since epoch (midnight Jan 1 1970 GMT). Available
                                           for 'send' and 'receive' category of transactions.
   }
 ]
@@ -44,7 +45,7 @@ Result:
 Examples:
 
 List the most recent 10 transactions in the systems
-> bitcoin-cli listtransactions 
+> bitcoin-cli listtransactions
 
 List transactions 100 to 120
 > bitcoin-cli listtransactions "" 20 100
