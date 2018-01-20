@@ -1071,6 +1071,10 @@ BitGoD.prototype.handleListTransactions = function(account, count, from, minHeig
     throw this.error('Negative from', -8);
   }
 
+  minHeight = this.getNumber(minHeight, 0);
+  minConfirms = this.getNumber(minConfirms, 0);
+  maxHeight = this.getNumber(maxHeight, 999999999);
+
   var keychain = decryptTravelInfo ? this.getSigningKeychain() : undefined;
 
   var outputList = [];
