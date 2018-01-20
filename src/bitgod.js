@@ -643,7 +643,7 @@ BitGoD.prototype.handleWalletLock = function() {
 
 BitGoD.prototype.newAddress = function(chain) {
   this.ensureWallet();
-  return this.wallet.createAddress({chain: chain})
+  return this.wallet.createAddress({chain: chain, allowExisting: true})
   .then(function(address) {
     return address.address;
   });
@@ -1032,9 +1032,10 @@ BitGoD.prototype.validateTxOutputs = function(outputs) {
  * @param from The number of transactions to skip
  * @param minHeight Only return transactions from a block with minHeight and above
  * @param decryptTravelInfo  Decrypt received travel info if it exists
+ * @param minConfirms Only return transactions with at least this many confirmations
  * @returns {*}
  */
-BitGoD.prototype.handleListTransactions = function(account, count, from, minHeight, decryptTravelInfo) {
+BitGoD.prototype.handleListTransactions = function(account, count, from, minHeight, decryptTravelInfo, minConfirms) {
   this.ensureWallet();
   var self = this;
 
@@ -1053,7 +1054,7 @@ BitGoD.prototype.handleListTransactions = function(account, count, from, minHeig
 
   var outputList = [];
   var getTransactionsInternal = function(skip) {
-    return self.wallet.transactions({ limit: 500, skip: skip, minHeight: minHeight })
+    return self.wallet.transactions({ limit: 500, skip: skip, minHeight: minHeight, minConfirms: minConfirms })
     .then(function(res) {
       res.transactions.every(function(tx) {
         self.processTxAndAddOutputsToList(tx, outputList, keychain);
@@ -1093,7 +1094,6 @@ BitGoD.prototype.handleListTransactions = function(account, count, from, minHeig
     }
     return self.validateTxOutputs(outputs);
   });
-
 };
 
 BitGoD.prototype.handleListSinceBlock = function(blockHash, targetConfirms) {
