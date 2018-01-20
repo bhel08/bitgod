@@ -1053,9 +1053,10 @@ BitGoD.prototype.validateTxOutputs = function(outputs) {
  * @param minHeight Only return transactions from a block with minHeight and above
  * @param decryptTravelInfo  Decrypt received travel info if it exists
  * @param minConfirms Only return transactions with at least this many confirmations
+ * @param maxHeight Only return transactions from a block with maxHeight and below
  * @returns {*}
  */
-BitGoD.prototype.handleListTransactions = function(account, count, from, minHeight, decryptTravelInfo, minConfirms) {
+BitGoD.prototype.handleListTransactions = function(account, count, from, minHeight, decryptTravelInfo, minConfirms, maxHeight) {
   this.ensureWallet();
   var self = this;
 
@@ -1074,7 +1075,7 @@ BitGoD.prototype.handleListTransactions = function(account, count, from, minHeig
 
   var outputList = [];
   var getTransactionsInternal = function(skip) {
-    return self.wallet.transactions({ limit: 500, skip: skip, minHeight: minHeight, minConfirms: minConfirms })
+    return self.wallet.transactions({ limit: 500, skip: skip, minHeight: minHeight, minConfirms: minConfirms, maxHeight: maxHeight })
     .then(function(res) {
       res.transactions.every(function(tx) {
         self.processTxAndAddOutputsToList(tx, outputList, keychain);

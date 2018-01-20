@@ -16,7 +16,7 @@ getwalletinfo
 help ( "command" )
 listaccounts ( minconf )
 listsinceblock ( "blockhash" target-confirmations )
-listtransactions ( "account" count from minHeight decryptTravelInfo ))
+listtransactions ( "account" count from minHeight decryptTravelInfo minConfirms maxHeight ))
 listunspent ( minconf maxconf addresses ignoreConfirmsForChange minUnspentSize )
 lock
 sendfrom "fromaccount" "tobitcoinaddress" amount ( minconf "comment" )
