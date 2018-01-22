@@ -748,7 +748,14 @@ BitGoD.prototype.handleListUnspent = function(minConfirms, maxConfirms, addresse
   maxConfirms = this.getNumber(maxConfirms, 9999999);
   minUnspentSize = this.getNumber(minUnspentSize);
 
-  return this.wallet.unspents({minConfirms: minConfirms, minSize: minUnspentSize})
+  // The limit defined here gets clamped server-side (currently to 5000).
+  // Locally it will define the maximum number of unspents to aggregate through pagination.
+  // In this call we want to fetch all requests and use a big page size in order to avoid timeouts.
+  // Ideally we should be able to define page size and total limit separately, but this does the job for now.
+  // See BG-2878
+  var limit = 21000000 * 1e8;
+
+  return this.wallet.unspents({ minConfirms: minConfirms, minSize: minUnspentSize, limit: limit })
   .then(function(unspents) {
     return unspents.map(function(u) {
       const chain = parseInt(u.chainPath.split('/')[1], 10);
