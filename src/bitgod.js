@@ -746,6 +746,7 @@ BitGoD.prototype.handleListUnspent = function(minConfirms, maxConfirms, addresse
   var self = this;
   minConfirms = this.getNumber(minConfirms, 1);
   maxConfirms = this.getNumber(maxConfirms, 9999999);
+  minUnspentSize = this.getNumber(minUnspentSize);
 
   return this.wallet.unspents({minConfirms: minConfirms, minSize: minUnspentSize})
   .then(function(unspents) {
