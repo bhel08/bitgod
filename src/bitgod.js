@@ -22,9 +22,9 @@ var BitGoD = function () {
 
   // Set up logger
   var logLevels = {
-    debug: 0,
+    debug: 2,
     info: 1,
-    error: 2
+    error: 0
   };
 
   var logColors = {
@@ -41,10 +41,10 @@ var BitGoD = function () {
   });
   this.logger.add(winston.transports.Console, { level: 'info', timestamp: true, colorize: true });
 
-  console.log = this.logger.info;
-  console.info = this.logger.info;
-  console.warn = this.logger.error;
-  console.error = this.logger.error;
+  console.log = this.logger.info.bind(this.logger);
+  console.info = this.logger.info.bind(this.logger);
+  console.warn = this.logger.error.bind(this.logger);
+  console.error = this.logger.error.bind(this.logger);
 };
 
 BitGoD.prototype.setLoggingEnabled = function(loggingEnabled) {
