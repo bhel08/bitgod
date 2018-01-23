@@ -230,9 +230,21 @@ BitGoD.prototype.setupProxy = function(config) {
   };
 
   // Verify we can actually connect
-  return this.callLocalMethod('getinfo', [])
+  // https://bitcoin.org/en/developer-reference#getblockchaininfo
+  return this.callLocalMethod('getblockchaininfo', [])
   .then(function(result) {
-    var bitcoindNetwork = result.testnet ? 'testnet' : 'bitcoin';
+    var bitcoindNetwork;
+    switch (result.chain) {
+      case 'main':
+        bitcoindNetwork = 'bitcoin';
+        break;
+      case 'test':
+        bitcoindNetwork = 'testnet';
+        break;
+      default:
+        // regtest is unsupported
+        throw new Error('unknown network ' + result.chain);
+    }
     if (bitcoindNetwork !== bitgo.getNetwork()) {
       throw new Error('bitcoind using ' + bitcoindNetwork + ', bitgod using ' + bitgo.getNetwork());
     }
@@ -1698,6 +1710,7 @@ BitGoD.prototype.run = function(testArgString) {
     'getnewaddress' : self.handleGetNewAddress,
     'getrawchangeaddress' : self.handleGetRawChangeAddress,
     'getbalance' : self.handleGetBalance,
+    // FIXME BG-2862: `getinfo` is deprecated
     'getinfo' : self.handleGetInfo,
     'getwalletinfo' : self.handleGetWalletInfo,
     'getunconfirmedbalance' : self.handleGetUnconfirmedBalance,
