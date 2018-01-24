@@ -3,13 +3,14 @@ listtransactions ( "account" count from minHeight decryptTravelInfo ))
 Returns up to 'count' most recent transactions skipping the first 'from' transactions for account 'account'.
 
 Arguments:
-1. "account"    (string, optional) DEPRECATED. The account name. Should be "".
+1. "account"      (string, optional) DEPRECATED. The account name. Should be "".
 2. count          (numeric, optional, default=10) The number of transactions to return
 3. from           (numeric, optional, default=0) The number of transactions to skip
 4. minHeight      (numeric, optional, default=0) The mininum block height for transactions
 5. decryptTravelInfo (boolean, optional, default=false) If true, decrypt any Travel Rule info attached to transactions
                                                         (requires active keychain)
-6. minConfirms     (numeric, optional, default=0) The mininum number of confirmations
+6. minConfirms (numeric, optional, default=0) The mininum number of confirmations for transactions
+7. maxHeight (numeric, optional, default=unlimited) The maximum block height for transactions
 
 Result:
 [
