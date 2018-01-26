@@ -1495,7 +1495,27 @@ BitGoD.prototype.handleGetWalletInfo = function() {
   });
 };
 
-BitGoD.prototype.handleGetInfo = function() {
+BitGoD.prototype.handleGetBlockchainInfo = function() {
+  const self = this;
+  return Q().then(function() {
+    if (self.client) {
+      return self.callLocalMethod('getblockchaininfo', []);
+    }
+    return { message: 'need proxy for getblockchaininfo' };
+  });
+};
+
+BitGoD.prototype.handleGetNetworkInfo = function() {
+  const self = this;
+  return Q().then(function() {
+    if (self.client) {
+      return self.callLocalMethod('getnetworkinfo', []);
+    }
+    return { message: 'need proxy for getnetworkinfo' };
+  });
+};
+
+const getInfo = function(allowCallToLocalNode) {
   var self = this;
   var promises = [];
   var hasToken = !!this.bitgo._token;
@@ -1506,7 +1526,7 @@ BitGoD.prototype.handleGetInfo = function() {
     effectiveTxConfirmTarget = 2;
   }
 
-  promises.push(self.client ? self.callLocalMethod('getinfo', []) : undefined);
+  promises.push(self.client && allowCallToLocalNode ? self.callLocalMethod('getinfo', []) : undefined);
   promises.push(hasToken ? self.getBalance(1) : undefined);
   if (typeof(effectiveTxConfirmTarget) !== 'undefined') {
     promises.push(self.handleEstimateFee(effectiveTxConfirmTarget));
@@ -1539,6 +1559,14 @@ BitGoD.prototype.handleGetInfo = function() {
     }
     return info;
   });
+};
+
+BitGoD.prototype.handleGetInfo = function() {
+  return getInfo(true);
+};
+
+BitGoD.prototype.handleGetBitGoDInfo = function() {
+  return getInfo(false);
 };
 
 BitGoD.prototype.handleNotImplemented = function() {
@@ -1724,6 +1752,9 @@ BitGoD.prototype.run = function(testArgString) {
     'getbalance' : self.handleGetBalance,
     // FIXME BG-2862: `getinfo` is deprecated
     'getinfo' : self.handleGetInfo,
+    'getblockchaininfo' : self.handleGetBlockchainInfo,
+    'getnetworkinfo' : self.handleGetNetworkInfo,
+    'getbitgodinfo' : self.handleGetBitGoDInfo,
     'getwalletinfo' : self.handleGetWalletInfo,
     'getunconfirmedbalance' : self.handleGetUnconfirmedBalance,
     'gettransaction' : self.handleGetTransaction,
