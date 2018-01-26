@@ -387,12 +387,12 @@ describe('BitGoD', function() {
 
       // receive address creation
       nock('https://test.bitgo.com:443')
-        .post('/api/v1/wallet/2N9VaC4SDRNNnEy6G8zLF8gnHgkY6LV9PsX/address/10', {"chain":10, "allowExisting": true})
+        .post('/api/v1/wallet/2N9VaC4SDRNNnEy6G8zLF8gnHgkY6LV9PsX/address/10', {"chain":10, "allowExisting": false})
         .reply(200, {"address":"2MzHdeZsnkXZyPtA128ToZHDWx5hLTPV6ib","chain":10,"index":26,"path":"/10/26"});
 
       // receive address creation
       nock('https://test.bitgo.com:443')
-        .post('/api/v1/wallet/2N9VaC4SDRNNnEy6G8zLF8gnHgkY6LV9PsX/address/11', {"chain":11, "allowExisting": true})
+        .post('/api/v1/wallet/2N9VaC4SDRNNnEy6G8zLF8gnHgkY6LV9PsX/address/11', {"chain":11, "allowExisting": false})
         .reply(200, {"address":"2N2yHyNdB3kvAdZ63UPFvk51FeRfG3WrDaf","chain":11,"index":70,"path":"/11/70"});
     });
 

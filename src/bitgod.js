@@ -655,7 +655,7 @@ BitGoD.prototype.handleWalletLock = function() {
 
 BitGoD.prototype.newAddress = function(chain) {
   this.ensureWallet();
-  return this.wallet.createAddress({chain: chain, allowExisting: true})
+  return this.wallet.createAddress({ chain: chain })
   .then(function(address) {
     return address.address;
   });
