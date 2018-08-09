@@ -708,7 +708,7 @@ BitGoD.prototype.getBalance = function(minConfirms, minUnspentSize) {
   var self = this;
   return Q().then(function() {
     if (minConfirms >= 2) {
-      return self.getBalanceFromUnspents(minConfirms, 9999999, 0, true, minUnspentSize);
+      return self.getBalanceFromUnspents(minConfirms, 9999999, true, minUnspentSize);
     }
     return self.getWallet()
     .then(function(wallet) {
