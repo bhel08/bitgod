@@ -1450,7 +1450,8 @@ BitGoD.prototype.handleSendManyExtended = function(account, recipients, minConfi
       instant: !!instant,
       minUnspentSize: minUnspentSize,
       targetWalletUnspents: self.minUnspentsTarget,
-      keychain: self.getSigningKeychain()
+      keychain: self.getSigningKeychain(),
+      sequenceId: sequenceId
     });
   })
   .then(function(result) {
