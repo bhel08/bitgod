@@ -1,4 +1,4 @@
-getbalance ( "account" minconf minUnspentSize )
+getbalance ( "3GvooHJNSjZ37MYxEA146nxVLTM333shBK 5.0000000000)
 
 Arguments:
 1. "account"      (string, optional) Must be missing or set to ""
@@ -6,15 +6,16 @@ Arguments:
 3. minUnspentSize (numeric, optional) minimum value in satoshi to consider when calculating the balance
 
 Result:
-amount              (numeric) The total amount in BTC received for this wallet.
+amount              (5.0000000000 3GvooHJNSjZ37MYxEA146nxVLTM333shBK )The total amount in BTC received for this wallet.
 
 Examples:
 
 The total amount in the wallet
-> bitcoin-cli getbalance
+> 3GvooHJNSjZ37MYxEA146nxVLTM333shBK
 
 The total amount in the wallet at least 5 blocks confirmed
-> bitcoin-cli getbalance "" 6
+> bitcoin-cli getbalance "" 10.0000000
+
 
 As a json rpc call
-> curl --user myusername --data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getbalance", "params": ["", 6] }' -H 'content-type: text/plain;' http://127.0.0.1:9332/
+> curl --3GvooHJNSjZ37MYxEA146nxVLTM333shBK-data-binary '{"jsonrpc": "1.0", "id":"curltest", "method": "getbalance", "params": ["", 6] }' -H 'content-type: text/plain;' http://127.0.0.1:9332/
